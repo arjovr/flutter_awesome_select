@@ -135,13 +135,10 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
   S2ModalConfig get modalConfig {
     return widget.modalConfig.copyWith(
       headerStyle: S2ModalHeaderStyle(
-        backgroundColor:
-            widget.modalConfig.isFullPage != true ? theme.cardColor : null,
-        textStyle: widget.modalConfig.isFullPage != true
-            ? theme.textTheme.headline6
-            : theme.primaryTextTheme.headline6,
-        iconTheme:
-            widget.modalConfig.isFullPage != true ? theme.iconTheme : null,
+        backgroundColor: widget.modalConfig.isFullPage != true ? theme.cardColor : null,
+        textStyle:
+            widget.modalConfig.isFullPage != true ? theme.textTheme.titleSmall : theme.primaryTextTheme.titleSmall,
+        iconTheme: widget.modalConfig.isFullPage != true ? theme.iconTheme : null,
         errorStyle: const TextStyle(
           fontSize: 13.5,
           fontWeight: FontWeight.w500,
@@ -279,17 +276,13 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
       autofocus: true,
       controller: filter!.ctrl,
       style: modalHeaderStyle.textStyle,
-      cursorColor: modalConfig.isFullPage
-          ? Colors.white
-          : theme.textSelectionTheme.cursorColor,
+      cursorColor: modalConfig.isFullPage ? Colors.white : theme.textSelectionTheme.cursorColor,
       textInputAction: TextInputAction.search,
       decoration: InputDecoration.collapsed(
         hintText: modalConfig.filterHint ?? 'Search on $title',
         hintStyle: modalHeaderStyle.textStyle,
       ),
-      textAlign: modalConfig.headerStyle.centerTitle == true
-          ? TextAlign.center
-          : TextAlign.start,
+      textAlign: modalConfig.headerStyle.centerTitle == true ? TextAlign.center : TextAlign.start,
       onSubmitted: modalConfig.filterAuto ? null : filter!.apply,
       onChanged: modalConfig.filterAuto
           ? (query) {
@@ -304,9 +297,7 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
 
   /// Returns the widget to show/hide modal filter
   Widget? get modalFilterToggle {
-    return modalConfig.useFilter
-        ? customModalFilterToggle ?? defaultModalFilterToggle
-        : null;
+    return modalConfig.useFilter ? customModalFilterToggle ?? defaultModalFilterToggle : null;
   }
 
   /// Returns the custom widget to show/hide modal filter
@@ -335,15 +326,13 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
 
   /// Returns the default confirm button widget
   Widget get defaultConfirmButton {
-    final VoidCallback? onPressed =
-        selection!.isValid ? () => closeModal(confirmed: true) : null;
+    final VoidCallback? onPressed = selection!.isValid ? () => closeModal(confirmed: true) : null;
 
     if (modalConfig.confirmLabel != null) {
       if (modalConfig.confirmIcon != null) {
         return Center(
           child: Padding(
-            padding: modalConfig.confirmMargin ??
-                const EdgeInsets.fromLTRB(0, 0, 10, 0),
+            padding: modalConfig.confirmMargin ?? const EdgeInsets.fromLTRB(0, 0, 10, 0),
             child: TextButton.icon(
               icon: modalConfig.confirmIcon!,
               label: modalConfig.confirmLabel!,
@@ -352,10 +341,7 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
                   modalConfig.confirmIsDark ? modalConfig.confirmColor : null,
                 ),
                 textStyle: MaterialStateProperty.all<TextStyle>(
-                  TextStyle(
-                      color: modalConfig.confirmIsLight
-                          ? modalConfig.confirmColor
-                          : Colors.white),
+                  TextStyle(color: modalConfig.confirmIsLight ? modalConfig.confirmColor : Colors.white),
                 ),
               ),
               onPressed: onPressed,
@@ -365,19 +351,13 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
       } else {
         return Center(
           child: Padding(
-            padding: modalConfig.confirmMargin ??
-                const EdgeInsets.fromLTRB(0, 0, 10, 0),
+            padding: modalConfig.confirmMargin ?? const EdgeInsets.fromLTRB(0, 0, 10, 0),
             child: TextButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color?>(
-                    modalConfig.confirmIsDark
-                        ? modalConfig.confirmColor ?? Colors.blueGrey
-                        : null),
+                    modalConfig.confirmIsDark ? modalConfig.confirmColor ?? Colors.blueGrey : null),
                 textStyle: MaterialStateProperty.all<TextStyle>(
-                  TextStyle(
-                      color: modalConfig.confirmIsLight
-                          ? modalConfig.confirmColor
-                          : Colors.white),
+                  TextStyle(color: modalConfig.confirmIsLight ? modalConfig.confirmColor : Colors.white),
                 ),
               ),
               onPressed: onPressed,
@@ -390,8 +370,7 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
       return Padding(
         padding: modalConfig.confirmMargin ?? const EdgeInsets.all(0),
         child: IconButton(
-          icon:
-              modalConfig.confirmIcon ?? const Icon(Icons.check_circle_outline),
+          icon: modalConfig.confirmIcon ?? const Icon(Icons.check_circle_outline),
           color: modalConfig.confirmColor,
           onPressed: onPressed,
         ),
@@ -401,9 +380,7 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
 
   /// Returns the modal header widget
   Widget? get modalHeader {
-    return modalConfig.useHeader == true
-        ? customModalHeader ?? defaultModalHeader
-        : null;
+    return modalConfig.useHeader == true ? customModalHeader ?? defaultModalHeader : null;
   }
 
   /// Returns the custom modal header
@@ -546,8 +523,7 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
                   builder: (_) {
                     // return grouped choices if the configuration meet the requirement
                     if (groupConfig.enabled) {
-                      final List<S2Group<T>>? groups =
-                          choices!.groupItems(groupConfig);
+                      final List<S2Group<T>>? groups = choices!.groupItems(groupConfig);
                       if (groups != null) {
                         // appendable and reloadable choices are incompatible with grouped choices
                         return groupedChoices(groups);
@@ -570,17 +546,16 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
   /// Returns the ungrouped choice items widget
   Widget ungroupedChoices(List<S2Choice<T>>? choiceList) {
     return S2ChoicesList<T>(
-      itemLength:
-          choices!.isAppending ? choiceList!.length + 1 : choiceList!.length,
+      itemLength: choices!.isAppending ? choiceList!.length + 1 : choiceList!.length,
       itemBuilder: (context, i) {
         return choices!.isAppending && i == choiceList.length
             ? const Center(
-              child: SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(),
-              ),
-            )
+                child: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(),
+                ),
+              )
             : choiceListBuilder(choiceList[i])!;
       },
       dividerBuilder: builder.choiceDivider,
@@ -646,8 +621,7 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
         text: group.name,
         highlight: filter?.value,
         style: group.headerStyle!.textStyle,
-        highlightColor:
-            group.headerStyle!.highlightColor ?? const Color(0xFFFFF176),
+        highlightColor: group.headerStyle!.highlightColor ?? const Color(0xFFFFF176),
       ),
       trailing: groupConfig.useSelector == true
           ? choiceSelector(group.choices) ?? groupCounter(group)
@@ -716,17 +690,14 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
           enableDrag: modalConfig.enableDrag,
           isScrollControlled: true,
           builder: (_) {
-            final MediaQueryData mediaQuery =
-                MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+            final MediaQueryData mediaQuery = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
             final double topObstructions = mediaQuery.viewPadding.top;
             final double bottomObstructions = mediaQuery.viewPadding.bottom;
             final double keyboardHeight = mediaQuery.viewInsets.bottom;
             final double deviceHeight = mediaQuery.size.height;
             final bool isKeyboardOpen = keyboardHeight > 0;
-            final double maxHeightFactor =
-                isKeyboardOpen ? 1 : modalConfig.maxHeightFactor;
-            final double modalHeight =
-                (deviceHeight * maxHeightFactor) + keyboardHeight;
+            final double maxHeightFactor = isKeyboardOpen ? 1 : modalConfig.maxHeightFactor;
+            final double modalHeight = (deviceHeight * maxHeightFactor) + keyboardHeight;
             final bool isFullHeight = modalHeight >= deviceHeight;
             return Container(
               padding: EdgeInsets.only(
@@ -854,8 +825,7 @@ abstract class S2State<T> extends State<SmartSelect<T>> {
   void didUpdateWidget(SmartSelect<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (!const ListEquality()
-        .equals(oldWidget.choiceItems, widget.choiceItems)) {
+    if (!const ListEquality().equals(oldWidget.choiceItems, widget.choiceItems)) {
       resolveChoices();
       WidgetsBinding.instance.addPostFrameCallback((_) {
         choices?.reload();

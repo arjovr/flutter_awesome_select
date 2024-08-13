@@ -198,9 +198,7 @@ class S2Tile<T> extends StatelessWidget {
   }
 
   Widget? get _trailingIconWidget {
-    return isLoading != true
-        ? trailing ?? S2Tile.defaultTrailing
-        : S2Tile.defaultLoadingIndicator;
+    return isLoading != true ? trailing ?? S2Tile.defaultTrailing : S2Tile.defaultLoadingIndicator;
   }
 
   Widget get _loadingWidget {
@@ -212,9 +210,7 @@ class S2Tile<T> extends StatelessWidget {
       builder: (context) {
         return DefaultTextStyle.merge(
           child: isLoading == true ? _loadingWidget : value,
-          style: isError == true
-              ? TextStyle(color: Theme.of(context).errorColor)
-              : null,
+          style: isError == true ? TextStyle(color: Theme.of(context).highlightColor) : null,
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
         );
